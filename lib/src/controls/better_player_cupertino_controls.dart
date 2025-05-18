@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:awesome_video_player/src/configuration/better_player_controls_configuration.dart';
 import 'package:awesome_video_player/src/controls/better_player_controls_state.dart';
 import 'package:awesome_video_player/src/controls/better_player_cupertino_progress_bar.dart';
@@ -9,6 +10,7 @@ import 'package:awesome_video_player/src/core/better_player_utils.dart';
 import 'package:awesome_video_player/src/video_player/video_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_to_airplay/flutter_to_airplay.dart';
 
 class BetterPlayerCupertinoControls extends StatefulWidget {
   ///Callback used to send information if player bar is hidden or not
@@ -334,6 +336,36 @@ class _BetterPlayerCupertinoControlsState
     );
   }
 
+  Widget _buildCastButton(
+    VideoPlayerController? controller,
+    Color backgroundColor,
+    Color iconColor,
+    double barHeight,
+    double iconSize,
+    double buttonPadding,
+  ) {
+    return AnimatedOpacity(
+      opacity: controlsNotVisible ? 0.0 : 1.0,
+      duration: _controlsConfiguration.controlsHideTime,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10.0),
+        child: Container(
+          decoration: BoxDecoration(
+            color: backgroundColor,
+          ),
+          child: Container(
+            height: barHeight,
+            child: Platform.isIOS
+                ? AirPlayRoutePickerView(
+                    prioritizesVideoDevices: true,
+                  )
+                : const SizedBox(),
+          ),
+        ),
+      ),
+    );
+  }
+
   GestureDetector _buildMuteButton(
     VideoPlayerController? controller,
     Color backgroundColor,
@@ -525,6 +557,17 @@ class _BetterPlayerCupertinoControlsState
             )
           else
             const SizedBox(),
+          const SizedBox(
+            width: 4,
+          ),
+          _buildCastButton(
+            _controller,
+            backgroundColor,
+            iconColor,
+            barHeight,
+            iconSize,
+            buttonPadding,
+          ),
           const SizedBox(
             width: 4,
           ),
