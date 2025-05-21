@@ -35,6 +35,9 @@ dev_dependencies:
   lint: ^2.3.0
   flutter_lints: ^5.0.0
 
+dependency_overrides:
+  rxdart: ^0.28.0
+
 flutter:
   plugin:
     platforms:
