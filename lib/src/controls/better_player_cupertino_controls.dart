@@ -357,6 +357,9 @@ class _BetterPlayerCupertinoControlsState
             height: barHeight,
             child: Platform.isIOS
                 ? AirPlayRoutePickerView(
+                    width: iconSize,
+                    height: iconSize,
+                    tintColor: iconColor,
                     prioritizesVideoDevices: true,
                   )
                 : const SizedBox(),
@@ -557,17 +560,19 @@ class _BetterPlayerCupertinoControlsState
             )
           else
             const SizedBox(),
-          const SizedBox(
-            width: 4,
-          ),
-          _buildCastButton(
-            _controller,
-            backgroundColor,
-            iconColor,
-            barHeight,
-            iconSize,
-            buttonPadding,
-          ),
+          if (Platform.isIOS) ...[
+            const SizedBox(
+              width: 4,
+            ),
+            _buildCastButton(
+              _controller,
+              backgroundColor,
+              iconColor,
+              barHeight,
+              iconSize,
+              buttonPadding,
+            ),
+          ],
           const SizedBox(
             width: 4,
           ),
