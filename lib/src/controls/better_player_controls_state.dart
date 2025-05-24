@@ -465,6 +465,14 @@ abstract class BetterPlayerControlsState<T extends StatefulWidget>
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
               decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Color(0x0C8A8A8A),
+                    blurRadius: 16,
+                    offset: Offset(0, -2),
+                    spreadRadius: 0,
+                  )
+                ],
                 color: betterPlayerControlsConfiguration.overflowModalColor,
                 /*shape: RoundedRectangleBorder(side: Bor,borderRadius: 24,)*/
                 borderRadius: const BorderRadius.only(
@@ -496,6 +504,14 @@ abstract class BetterPlayerControlsState<T extends StatefulWidget>
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
               decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Color(0x0C8A8A8A),
+                    blurRadius: 16,
+                    offset: Offset(0, -2),
+                    spreadRadius: 0,
+                  )
+                ],
                 color: betterPlayerControlsConfiguration.overflowModalColor,
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(24.0),

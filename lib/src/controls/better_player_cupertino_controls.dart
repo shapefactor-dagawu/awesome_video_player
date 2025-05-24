@@ -350,20 +350,21 @@ class _BetterPlayerCupertinoControlsState
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10.0),
         child: Container(
+          height: barHeight,
+          width: barHeight,
           decoration: BoxDecoration(
             color: backgroundColor,
           ),
-          child: Container(
-            height: barHeight,
-            child: Platform.isIOS
-                ? AirPlayRoutePickerView(
+          child: Platform.isIOS
+              ? Center(
+                  child: AirPlayRoutePickerView(
                     width: iconSize,
                     height: iconSize,
                     tintColor: iconColor,
                     prioritizesVideoDevices: true,
-                  )
-                : const SizedBox(),
-          ),
+                  ),
+                )
+              : const SizedBox(),
         ),
       ),
     );
