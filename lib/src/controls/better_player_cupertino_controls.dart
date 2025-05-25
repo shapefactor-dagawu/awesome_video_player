@@ -9,6 +9,7 @@ import 'package:awesome_video_player/src/core/better_player_controller.dart';
 import 'package:awesome_video_player/src/core/better_player_utils.dart';
 import 'package:awesome_video_player/src/video_player/video_player.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_to_airplay/flutter_to_airplay.dart';
 
@@ -561,7 +562,7 @@ class _BetterPlayerCupertinoControlsState
             )
           else
             const SizedBox(),
-          if (Platform.isIOS) ...[
+          if (!kIsWeb && Platform.isIOS) ...[
             const SizedBox(
               width: 4,
             ),
