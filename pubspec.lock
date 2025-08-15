@@ -107,10 +107,11 @@ packages:
   flutter_to_airplay:
     dependency: "direct main"
     description:
-      name: flutter_to_airplay
-      sha256: "702408986b652dfaef5ad68c6f3c3008941ae8d8ef5db526792239c8d490a16d"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: "56504b24bb2ab397f99e18e0786a7cb81245a1e5"
+      resolved-ref: "56504b24bb2ab397f99e18e0786a7cb81245a1e5"
+      url: "https://github.com/shapefactor-dagawu/flutter_to_airplay.git"
+    source: git
     version: "2.0.5"
   flutter_web_plugins:
     dependency: transitive
