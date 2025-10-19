@@ -373,6 +373,7 @@ class _BetterPlayerCupertinoControlsState
 
   GestureDetector _buildMuteButton(
     VideoPlayerController? controller,
+    BetterPlayerController? betterPlayerController,
     Color backgroundColor,
     Color iconColor,
     double barHeight,
@@ -384,10 +385,10 @@ class _BetterPlayerCupertinoControlsState
         cancelAndRestartTimer();
 
         if (_latestValue!.volume == 0) {
-          controller!.setVolume(_latestVolume ?? 0.5);
+          betterPlayerController!.setVolume(_latestVolume ?? 0.5);
         } else {
           _latestVolume = controller!.value.volume;
-          controller.setVolume(0.0);
+          betterPlayerController?.setVolume(0.0);
         }
       },
       child: AnimatedOpacity(
@@ -554,6 +555,7 @@ class _BetterPlayerCupertinoControlsState
           if (_controlsConfiguration.enableMute)
             _buildMuteButton(
               _controller,
+              _betterPlayerController,
               backgroundColor,
               iconColor,
               barHeight,
