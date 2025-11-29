@@ -24,7 +24,7 @@ if (flutterVersionName == null) {
 
 
 android {
-    compileSdk 34
+    compileSdk 36
     namespace "com.jhomlala.better_player_example"
 
     compileOptions {
@@ -40,14 +40,11 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
-    lintOptions {
-        disable 'InvalidPackage'
-    }
 
     defaultConfig {
         applicationId "com.jhomlala.better_player_example"
-        minSdkVersion 21
-        targetSdkVersion 34
+        minSdkVersion flutter.minSdkVersion
+        targetSdkVersion 36
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
@@ -58,6 +55,9 @@ android {
         release {
             signingConfig signingConfigs.debug
         }
+    }
+    lint {
+        disable 'InvalidPackage'
     }
 }
 
