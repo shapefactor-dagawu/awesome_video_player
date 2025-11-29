@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:awesome_video_player/src/configuration/better_player_controls_configuration.dart';
 import 'package:awesome_video_player/src/controls/better_player_controls_state.dart';
 import 'package:awesome_video_player/src/controls/better_player_cupertino_progress_bar.dart';
@@ -8,7 +9,9 @@ import 'package:awesome_video_player/src/core/better_player_controller.dart';
 import 'package:awesome_video_player/src/core/better_player_utils.dart';
 import 'package:awesome_video_player/src/video_player/video_player.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_to_airplay/flutter_to_airplay.dart';
 
 class BetterPlayerCupertinoControls extends StatefulWidget {
   ///Callback used to send information if player bar is hidden or not
@@ -334,8 +337,43 @@ class _BetterPlayerCupertinoControlsState
     );
   }
 
+  Widget _buildCastButton(
+    VideoPlayerController? controller,
+    Color backgroundColor,
+    Color iconColor,
+    double barHeight,
+    double iconSize,
+    double buttonPadding,
+  ) {
+    return AnimatedOpacity(
+      opacity: controlsNotVisible ? 0.0 : 1.0,
+      duration: _controlsConfiguration.controlsHideTime,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10.0),
+        child: Container(
+          height: barHeight,
+          width: barHeight,
+          decoration: BoxDecoration(
+            color: backgroundColor,
+          ),
+          child: Platform.isIOS
+              ? Center(
+                  child: AirPlayRoutePickerView(
+                    width: iconSize,
+                    height: iconSize,
+                    tintColor: iconColor,
+                    prioritizesVideoDevices: true,
+                  ),
+                )
+              : const SizedBox(),
+        ),
+      ),
+    );
+  }
+
   GestureDetector _buildMuteButton(
     VideoPlayerController? controller,
+    BetterPlayerController? betterPlayerController,
     Color backgroundColor,
     Color iconColor,
     double barHeight,
@@ -347,10 +385,10 @@ class _BetterPlayerCupertinoControlsState
         cancelAndRestartTimer();
 
         if (_latestValue!.volume == 0) {
-          controller!.setVolume(_latestVolume ?? 0.5);
+          betterPlayerController!.setVolume(_latestVolume ?? 0.5);
         } else {
           _latestVolume = controller!.value.volume;
-          controller.setVolume(0.0);
+          betterPlayerController?.setVolume(0.0);
         }
       },
       child: AnimatedOpacity(
@@ -517,6 +555,7 @@ class _BetterPlayerCupertinoControlsState
           if (_controlsConfiguration.enableMute)
             _buildMuteButton(
               _controller,
+              _betterPlayerController,
               backgroundColor,
               iconColor,
               barHeight,
@@ -525,6 +564,19 @@ class _BetterPlayerCupertinoControlsState
             )
           else
             const SizedBox(),
+          if (!kIsWeb && Platform.isIOS) ...[
+            const SizedBox(
+              width: 4,
+            ),
+            _buildCastButton(
+              _controller,
+              backgroundColor,
+              iconColor,
+              barHeight,
+              iconSize,
+              buttonPadding,
+            ),
+          ],
           const SizedBox(
             width: 4,
           ),
